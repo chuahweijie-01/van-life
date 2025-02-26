@@ -2,11 +2,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import About from './pages/About';
-import Vans from './pages/Vans';
+import Vans from './pages/Vans/Vans';
 
 import './server'
 
-import VanDetail from './pages/VanDetail';
+import VanDetail from './pages/Vans/VanDetail';
 import Layout from './components/Layout';
 import Income from './pages/Host/Income';
 import Reviews from './pages/Host/Reviews';
@@ -17,6 +17,7 @@ import HostVanDetail from './pages/Host/HostVanDetail';
 import HostVanPricing from './pages/Host/HostVanPricing';
 import HostVanInfo from './pages/Host/HostVanInfo';
 import HostVanPhotos from './pages/Host/HostVanPhotos';
+import NotFound from './pages/NotFound';
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
                 <Route path='photos' element={<HostVanPhotos />} />
               </Route>
             </Route>
-
+            <Route path='*' element={<NotFound />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
