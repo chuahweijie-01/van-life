@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useLoaderData, useSearchParams } from "react-router-dom"
 import { getVans } from "../../api";
 
+export function loader() {
+    return getVans();
+}
+
 export default function Vans() {
-    const [vans, setVans] = useState([])
+    const vans = useLoaderData();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     const typeFilter = searchParams.get('type');
-
     const displayedVans = typeFilter ? vans.filter(x => x.type === typeFilter) : vans;
-
-    useEffect(() => {
-        async function loadVans() {
-            setLoading(true);
-            try {
-                const data = await getVans();
-                setVans(data);
-            } catch (err) {
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        }
-        loadVans();
-    }, [])
 
     const vanElements = displayedVans.map(van => (
         <div key={van.id} className="van-tile">
@@ -39,19 +24,6 @@ export default function Vans() {
             </Link>
         </div>
     ))
-
-    if (loading) {
-        return (
-            <h1 className="loading">Loading ...</h1>
-        )
-    }
-
-    if (error) {
-        return (
-            <h1 className="loading">There was an error {error.message}</h1>
-        )
-    }
-
 
     return (
         <div className="van-list-container">
